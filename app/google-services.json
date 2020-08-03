@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "621154586869",
+    "firebase_url": "https://skitchen-a2269.firebaseio.com",
+    "project_id": "skitchen-a2269",
+    "storage_bucket": "skitchen-a2269.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:621154586869:android:3d1523fc5619facb5b35bc",
+        "android_client_info": {
+          "package_name": "com.example.skitchen"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "621154586869-nd5cbpn8265sm7s00av85hgjtmhglubr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCzBvS-trm9H-78vjdlyOwmlwI31fIG1jU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "621154586869-nd5cbpn8265sm7s00av85hgjtmhglubr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
