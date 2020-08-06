@@ -2,43 +2,59 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/rounded_dark_border"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.ProfileDataFragment">
+
+    <TextView
+        android:id="@+id/tv_MyData"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="10dp"
+        android:text="My profile"
+        android:textColor="@color/colorPrimary"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tvNameLabel"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="5dp"
         android:layout_marginTop="20dp"
         android:text="Name:"
-        android:textColor="#000000"
+        android:textColor="@color/colorTextPrimary"
+        android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="@+id/tv_MyData"
+        app:layout_constraintTop_toBottomOf="@+id/tv_MyData" />
 
     <TextView
         android:id="@+id/tvNameData"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
-        android:layout_marginTop="20dp"
-        app:layout_constraintStart_toEndOf="@+id/tvNameLabel"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textColor="@color/colorTextSecondary"
+        android:textSize="14sp"
+        android:textStyle="italic"
+        app:layout_constraintBottom_toBottomOf="@+id/tvNameLabel"
+        app:layout_constraintStart_toEndOf="@+id/tvNameLabel" />
 
     <TextView
         android:id="@+id/tvMailLabel"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="5dp"
         android:layout_marginTop="20dp"
         android:text="Email:"
-        android:textColor="#000000"
+        android:textColor="@color/colorTextPrimary"
+        android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/tvNameLabel"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/tv_MyData"
         app:layout_constraintTop_toBottomOf="@+id/tvNameLabel" />
 
     <TextView
@@ -46,8 +62,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
-        android:layout_marginTop="20dp"
-        app:layout_constraintStart_toEndOf="@+id/tvMailLabel"
-        app:layout_constraintTop_toBottomOf="@+id/tvNameData" />
+        android:textColor="@color/colorTextSecondary"
+        android:textSize="14sp"
+        android:textStyle="italic"
+        app:layout_constraintBottom_toBottomOf="@+id/tvMailLabel"
+        app:layout_constraintStart_toEndOf="@+id/tvMailLabel" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

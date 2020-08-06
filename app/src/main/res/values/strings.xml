@@ -11,4 +11,21 @@
     <string name="login_failed">"Login failed"</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- TEMPORARY: PLACEHOLDER VOOR MEAL DATA -->
+    <string-array name="meal_names">
+        <item>Spaghetti Bolognaise</item>
+        <item>Gevulde paprika met puree</item>
+        <item>Varkenshaasje</item>
+        <item>Eigen makelij</item>
+        <item>Vegetarische ovenschotel</item>
+    </string-array>
+    <string-array name="meal_descriptions">
+        <item>This is a random description.</item>
+        <item>This is a random description.</item>
+        <item>This is a random description.</item>
+        <item>This is a random description.</item>
+        <item>This is a random description.</item>
+    </string-array>
+
 </resources>

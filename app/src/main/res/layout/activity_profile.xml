@@ -10,17 +10,17 @@
         android:id="@+id/frProfileData"
         android:name="com.example.skitchen.fragments.ProfileDataFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="5dp"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
-        tools:layout_editor_absoluteX="5dp"
-        tools:layout_editor_absoluteY="5dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <fragment
-        android:id="@+id/next_fragment"
-        android:name="com.example.skitchen.fragments.ProfileDataFragment"
+        android:id="@+id/frMeals"
+        android:name="com.example.skitchen.fragments.MealsFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:layout_weight="3"
         app:layout_constraintTop_toBottomOf="@+id/frProfileData"

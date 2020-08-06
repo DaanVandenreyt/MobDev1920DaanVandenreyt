@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.AddRecipeActivity">
+
+    <TextView
+        android:id="@+id/tvAddMeal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="32dp"
+        android:text="Add meal"
+        android:textAlignment="viewStart"
+        android:textColor="@color/colorPrimary"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvMealName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Name of your meal:"
+        android:textColor="@color/colorTextPrimary"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@+id/tvAddMeal"
+        app:layout_constraintTop_toBottomOf="@+id/tvAddMeal" />
+
+    <EditText
+        android:id="@+id/etMealName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Name"
+        android:inputType="textPersonName"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/tvMealName"
+        app:layout_constraintTop_toBottomOf="@+id/tvMealName" />
+
+    <TextView
+        android:id="@+id/tvMealDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Describe your meal:"
+        android:textColor="@color/colorTextPrimary"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@+id/etMealName"
+        app:layout_constraintTop_toBottomOf="@+id/etMealName" />
+
+    <EditText
+        android:id="@+id/etMealDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Name"
+        android:inputType="textPersonName"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/tvMealDescription"
+        app:layout_constraintTop_toBottomOf="@+id/tvMealDescription" />
+
+    <ImageView
+        android:id="@+id/ivMealPic"
+        android:layout_width="189dp"
+        android:layout_height="192dp"
+        android:layout_marginTop="8dp"
+        android:background="#DCDCDC"
+        app:layout_constraintStart_toStartOf="@+id/btnPickImage"
+        app:layout_constraintTop_toBottomOf="@+id/btnPickImage"
+        tools:srcCompat="@tools:sample/avatars"
+        android:contentDescription="Good image of the meal" />
+
+    <Button
+        android:id="@+id/btnPickImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Choose an image"
+        app:layout_constraintStart_toStartOf="@+id/etMealDescription"
+        app:layout_constraintTop_toBottomOf="@+id/etMealDescription" />
+
+    <Button
+        android:id="@+id/btnUploadMeal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/btn_background_primarycolor"
+        android:text="Upload your meal"
+        android:textColor="@android:color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pbUploadMeal" />
+
+    <ProgressBar
+        android:id="@+id/pbUploadMeal"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivMealPic" />
+</androidx.constraintlayout.widget.ConstraintLayout>
