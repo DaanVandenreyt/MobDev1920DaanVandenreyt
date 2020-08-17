@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.MealDetailActivity">
+
+    <TextView
+        android:id="@+id/tvNameLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:text="Name"
+        android:textColor="@color/colorPrimary"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvNameData"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="@+id/tvNameLabel"
+        app:layout_constraintTop_toBottomOf="@+id/tvNameLabel" />
+
+    <TextView
+        android:id="@+id/tvDescLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Description"
+        android:textColor="@color/colorPrimary"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@id/tvNameLabel"
+        app:layout_constraintTop_toBottomOf="@id/tvNameData" />
+
+    <TextView
+        android:id="@+id/tvDescData"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="@+id/tvDescLabel"
+        app:layout_constraintTop_toBottomOf="@+id/tvDescLabel" />
+
+    <TextView
+        android:id="@+id/tvCatLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Category"
+        android:textColor="@color/colorPrimary"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@id/tvDescLabel"
+        app:layout_constraintTop_toBottomOf="@id/tvDescData" />
+
+    <TextView
+        android:id="@+id/tvCatData"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="@+id/tvCatLabel"
+        app:layout_constraintTop_toBottomOf="@+id/tvCatLabel" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="56dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvCatData">
+
+        <TextView
+            android:id="@+id/tvGluten"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_background_primarycolor"
+            android:padding="8dp"
+            android:text="Gluten free"
+            android:textColor="@android:color/white"/>
+
+        <TextView
+            android:id="@+id/tvVeggie"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:background="@drawable/btn_background_primarycolor"
+            android:padding="8dp"
+            android:text="Vegetarian"
+            android:textColor="@android:color/white"/>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

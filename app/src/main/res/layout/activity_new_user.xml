@@ -18,15 +18,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_title" />
 
-    <ImageView
-        android:id="@+id/ivLogo"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivTitle"
-        app:srcCompat="@drawable/ic_logo" />
-
     <TextView
         android:id="@+id/tvMailLabel"
         android:layout_width="0dp"
@@ -41,6 +32,20 @@
         app:layout_constraintTop_toTopOf="@+id/etMail" />
 
     <TextView
+        android:id="@+id/tvNameLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="20dp"
+        android:text="Name:"
+        android:textColor="@android:color/white"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/tvMailLabel"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvMailLabel" />
+
+    <TextView
         android:id="@+id/tvPasswordLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -50,9 +55,9 @@
         android:textColor="@android:color/white"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/tvMailLabel"
+        app:layout_constraintEnd_toEndOf="@+id/tvNameLabel"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvMailLabel" />
+        app:layout_constraintTop_toBottomOf="@+id/tvNameLabel" />
 
     <EditText
         android:id="@+id/etMail"
@@ -66,7 +71,19 @@
         android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tvPasswordLabel"
-        app:layout_constraintTop_toBottomOf="@+id/ivLogo" />
+        app:layout_constraintTop_toBottomOf="@+id/ivTitle" />
+
+    <EditText
+        android:id="@+id/etName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Give your nickname."
+        android:inputType="text"
+        android:textColor="@android:color/white"
+        app:layout_constraintEnd_toEndOf="@+id/etMail"
+        app:layout_constraintStart_toStartOf="@+id/etMail"
+        app:layout_constraintTop_toBottomOf="@+id/etMail" />
 
     <EditText
         android:id="@+id/etPassword"
@@ -76,30 +93,30 @@
         android:hint="At least 8 characters"
         android:inputType="textPassword"
         android:textColor="@android:color/white"
-        app:layout_constraintEnd_toEndOf="@+id/etMail"
-        app:layout_constraintStart_toStartOf="@+id/etMail"
-        app:layout_constraintTop_toBottomOf="@+id/etMail" />
+        app:layout_constraintEnd_toEndOf="@+id/etName"
+        app:layout_constraintStart_toStartOf="@+id/etName"
+        app:layout_constraintTop_toBottomOf="@+id/etName" />
 
     <Button
-        android:id="@+id/btnLogin"
+        android:id="@+id/btnCreateAccount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:backgroundTint="@color/colorPrimary"
-        android:text="Login"
+        android:text="Create account"
         android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etPassword" />
 
     <TextView
-        android:id="@+id/tvNoAccount"
+        android:id="@+id/tvHaveAccount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="I don't have an account."
+        android:text="Already have an account?"
         android:textColor="@android:color/white"
         android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="@+id/btnLogin"
-        app:layout_constraintStart_toStartOf="@+id/btnLogin"
-        app:layout_constraintTop_toBottomOf="@+id/btnLogin" />
+        app:layout_constraintEnd_toEndOf="@+id/btnCreateAccount"
+        app:layout_constraintStart_toStartOf="@+id/btnCreateAccount"
+        app:layout_constraintTop_toBottomOf="@+id/btnCreateAccount" />
 </androidx.constraintlayout.widget.ConstraintLayout>
