@@ -1,6 +1,7 @@
 package com.example.skitchen.fragments;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -21,11 +22,9 @@ import com.example.skitchen.Meal;
 import com.example.skitchen.MealsAdapter;
 import com.example.skitchen.R;
 import com.example.skitchen.activities.AddMealActivity;
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.example.skitchen.activities.PrimaryActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -34,23 +33,14 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class ProfileFragment extends Fragment {
-
-    private TextView tvName;
-    private TextView tvMail;
-    private Button btnAddMeal;
 
     private RecyclerView rvMeals;
     private MealsAdapter mealsAdapter;
 
-    //private GoogleSignInAccount gAccount;
-    //private String accountId;
-    private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
 
-    private DatabaseReference databaseRef;
     private List<Meal> mealList;
 
     @Override
@@ -63,20 +53,23 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mAuth = FirebaseAuth.getInstance();
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
 
-        tvName = getView().findViewById(R.id.tvNameData);
-        tvMail = getView().findViewById(R.id.tvMailData);
+        TextView tvName = getView().findViewById(R.id.tvNameData);
+        TextView tvMail = getView().findViewById(R.id.tvMailData);
         rvMeals = getView().findViewById(R.id.rvMealsProfile);
-        btnAddMeal = getView().findViewById(R.id.btnAddMeal);
+        Button btnAddMeal = getView().findViewById(R.id.btnAddMeal);
 
         mealList = new ArrayList<>();
 
         new GetMealsTask().execute();
 
-        tvName.setText(currentUser.getDisplayName());
-        tvMail.setText(currentUser.getEmail());
+        String name = ((PrimaryActivity) getActivity()).name;
+        String email = ((PrimaryActivity) getActivity()).email;
+
+        tvName.setText(name);
+        tvMail.setText(email);
 
         btnAddMeal.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,7 +85,7 @@ public class ProfileFragment extends Fragment {
         @Override
         protected Void doInBackground(Void... voids) {
 
-            databaseRef = FirebaseDatabase.getInstance().getReference("meals/");
+            DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference("meals/");
             databaseRef.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {

@@ -44,32 +44,24 @@ public class AddMealActivity extends AppCompatActivity {
 
     private Meal newMeal;
 
-    private Button btnPickImage;
     private Button btnUploadMeal;
     private ImageView ivMealPic;
     private EditText etMealName;
     private EditText etMealDescription;
-    private ProgressBar pbUploadMeal;
     private RadioGroup rgMealCategory;
     private CheckBox cbGlutenFree;
     private CheckBox cbVegetarian;
 
-    private Uri imageUri;
-
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
 
-    //private StorageReference storageRef;
     private DatabaseReference databaseRef;
-
-    private StorageTask mealUploadTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_meal);
 
-        btnPickImage = findViewById(R.id.btnPickImage);
         btnUploadMeal = findViewById(R.id.btnUploadMeal);
         ivMealPic = findViewById(R.id.ivMealPic);
         etMealName = findViewById(R.id.etMealName);
@@ -77,42 +69,21 @@ public class AddMealActivity extends AppCompatActivity {
         rgMealCategory = findViewById(R.id.rgMealCategory);
         cbGlutenFree = findViewById(R.id.cbGlutenFree);
         cbVegetarian = findViewById(R.id.cbVegetarian);
-        pbUploadMeal = findViewById(R.id.pbUploadMeal);
 
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
 
-        //storageRef = FirebaseStorage.getInstance().getReference("meals/");
         databaseRef = FirebaseDatabase.getInstance().getReference("meals/");
 
-        /*btnPickImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                OpenFileChooser();
-            }
-        });*/
+
 
         btnUploadMeal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (mealUploadTask != null && mealUploadTask.isInProgress()) {
-                    Toast.makeText(AddMealActivity.this, "Upload in progress", Toast.LENGTH_SHORT).show();
-                }
                 new uploadMealTask().execute();
-                //uploadFile();
+
             }
         });
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
-                && data != null && data.getData() != null) {
-            imageUri = data.getData();
-            Picasso.get().load(imageUri).into(ivMealPic);
-        }
     }
 
     private class uploadMealTask extends AsyncTask<Void, Void, Void> {

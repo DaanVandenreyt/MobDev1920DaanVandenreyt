@@ -89,8 +89,6 @@ public class EmailActivity extends AppCompatActivity {
             mDatabaseRef.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    //cook.setName((String) snapshot.child("name").getValue());
-                    //cook.setEmail(snapshot.child("email").toString());
                     User user = snapshot.getValue(User.class);
                     assert user != null;
                     mailReceiver = user.getEmail();

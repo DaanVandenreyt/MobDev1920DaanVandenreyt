@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -36,6 +37,10 @@ public class LoginActivity extends AppCompatActivity {
     private EditText etPassword;
 
     private FirebaseAuth mAuth;
+
+    private static final String SHARED_PREFS = "userDetailPrefs";
+    private static final String NAME = "name";
+    private static final String EMAIL = "email";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -73,7 +78,15 @@ public class LoginActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
-                            //currentUser = mAuth.getCurrentUser();
+                            FirebaseUser currentUser = mAuth.getCurrentUser();
+
+                            SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            assert currentUser != null;
+                            editor.putString(NAME, currentUser.getDisplayName());
+                            editor.putString(EMAIL, currentUser.getEmail());
+                            editor.apply();
+
                             Intent intent = new Intent(LoginActivity.this, PrimaryActivity.class);
                             startActivity(intent);
                         } else {
@@ -87,59 +100,4 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 });
     }
-
-    /*private FirebaseAuth mAuth;
-    private GoogleSignInClient googleSignInClient;
-
-    private static final int RC_SIGN_IN = 88;
-    
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-
-        // Configure sign-in to request the user's ID, email address, and basic
-        // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-                .build();
-        googleSignInClient = GoogleSignIn.getClient(this, gso);
-
-        mAuth = FirebaseAuth.getInstance();
-
-        findViewById(R.id.sign_in_button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent signInIntent = googleSignInClient.getSignInIntent();
-                startActivityForResult(signInIntent, RC_SIGN_IN);
-            }
-        });
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
-        if (requestCode == RC_SIGN_IN) {
-            // The Task returned from this call is always completed, no need to attach
-            // a listener.
-            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-            handleSignInResult(task);
-        }
-    }
-
-    private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
-        try {
-            GoogleSignInAccount account = completedTask.getResult(ApiException.class);
-            if (account.)
-            // Signed in successfully, show authenticated UI.
-            Intent homeIntent = new Intent(LoginActivity.this, PrimaryActivity.class);
-            startActivity(homeIntent);
-        } catch (ApiException e) {
-            // The ApiException status code indicates the detailed failure reason.
-            // Please refer to the GoogleSignInStatusCodes class reference for more information.
-            Log.w("LoginActivity", "signInResult:failed code=" + e.getStatusCode());
-        }
-    }*/
 }

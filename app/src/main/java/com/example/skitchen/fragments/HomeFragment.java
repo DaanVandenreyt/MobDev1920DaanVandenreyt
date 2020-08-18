@@ -32,9 +32,7 @@ public class HomeFragment extends Fragment {
 
     RecyclerView rvMeals;
 
-    private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
-    private DatabaseReference databaseRef;
 
     private List<Meal> mealList;
     private MealsAdapter mealsAdapter;
@@ -49,7 +47,7 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mAuth = FirebaseAuth.getInstance();
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
 
         mealList = new ArrayList<>();
@@ -64,7 +62,7 @@ public class HomeFragment extends Fragment {
         @Override
         protected Void doInBackground(Void... voids) {
 
-            databaseRef = FirebaseDatabase.getInstance().getReference("meals/");
+            DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference("meals/");
             databaseRef.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -78,7 +76,6 @@ public class HomeFragment extends Fragment {
                     rvMeals.setHasFixedSize(true);
                     rvMeals.setVerticalScrollBarEnabled(false);
                     rvMeals.setLayoutManager(new LinearLayoutManager(getContext()));
-
                 }
 
                 @Override

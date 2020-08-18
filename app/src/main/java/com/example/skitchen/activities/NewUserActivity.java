@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -34,6 +35,10 @@ public class NewUserActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabaseRef;
+
+    private static final String SHARED_PREFS = "userDetailPrefs";
+    private static final String NAME = "name";
+    private static final String EMAIL = "email";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +78,6 @@ public class NewUserActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
-                            //FirebaseUser user = mAuth.getCurrentUser();
 
                             UserProfileChangeRequest changeRequest = new UserProfileChangeRequest.Builder()
                                     .setDisplayName(etName.getText().toString()).build();
@@ -83,6 +87,13 @@ public class NewUserActivity extends AppCompatActivity {
                             User user = new User(etName.getText().toString(), email);
                             String uploadID = currentUser.getUid();
                             mDatabaseRef.child(uploadID).setValue(user);
+
+                            SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            assert currentUser != null;
+                            editor.putString(NAME, currentUser.getDisplayName());
+                            editor.putString(EMAIL, currentUser.getEmail());
+                            editor.apply();
 
                             Intent intent = new Intent(NewUserActivity.this, PrimaryActivity.class);
                             startActivity(intent);

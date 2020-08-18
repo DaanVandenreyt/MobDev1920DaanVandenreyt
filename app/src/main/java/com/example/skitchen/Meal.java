@@ -51,10 +51,6 @@ public class Meal {
         this.description = description;
     }
 
-    //public void setImageUrl(String imageUrl) {
-    //    this.imageUrl = imageUrl;
-    //}
-
     public void setGlutenFree(Boolean glutenFree) { this.glutenFree = glutenFree; }
 
     public void setVegetarian(Boolean vegetarian) { this.vegetarian = vegetarian; }
