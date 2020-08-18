@@ -1,13 +1,16 @@
 package com.example.skitchen;
 
+import android.net.Uri;
+
 public class Meal {
 
-    String user;
-    String name;
-    String description;
-    MealCategory category;
-    Boolean glutenFree;
-    Boolean vegetarian;
+    private String user;
+    private String name;
+    private String description;
+    private MealCategory category;
+    private Boolean glutenFree;
+    private Boolean vegetarian;
+    private String image;
 
 
     public Meal() {
@@ -42,6 +45,10 @@ public class Meal {
 
     public Boolean getVegetarian() { return vegetarian; }
 
+    public String getImage() {
+        return image;
+    }
+
     //setters
     public void setName(String name) {
         this.name = name;
@@ -56,4 +63,8 @@ public class Meal {
     public void setVegetarian(Boolean vegetarian) { this.vegetarian = vegetarian; }
 
     public void setCategory(MealCategory category) { this.category = category; }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
 }

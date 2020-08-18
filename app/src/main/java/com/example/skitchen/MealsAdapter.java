@@ -65,6 +65,7 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.MyViewHolder
                 intent.putExtra("veggie", meal.getVegetarian());
                 intent.putExtra("category", meal.getCategory().toString());
                 intent.putExtra("user", meal.getUser());
+                intent.putExtra("image", meal.getImage());
                 context.startActivity(intent);
             }
         });

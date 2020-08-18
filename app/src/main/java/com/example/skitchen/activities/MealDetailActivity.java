@@ -8,12 +8,14 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.skitchen.R;
 import com.example.skitchen.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.squareup.picasso.Picasso;
 
 import java.util.Objects;
 
@@ -21,12 +23,14 @@ public class MealDetailActivity extends AppCompatActivity {
 
     private TextView tvName, tvDesc, tvCat;
     private TextView glutenView, veggieView;
+    private ImageView ivMealImage;
     private Button btnToEmail;
 
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
 
     private String mealUser;
+    private String mealImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +40,7 @@ public class MealDetailActivity extends AppCompatActivity {
         tvName = findViewById(R.id.tvNameData);
         tvDesc = findViewById(R.id.tvDescData);
         tvCat = findViewById(R.id.tvCatData);
+        ivMealImage = findViewById(R.id.ivMealImage);
 
         glutenView = findViewById(R.id.tvGluten);
         veggieView = findViewById(R.id.tvVeggie);
@@ -63,6 +68,13 @@ public class MealDetailActivity extends AppCompatActivity {
         tvName.setText(intent.getStringExtra("name"));
         tvDesc.setText(intent.getStringExtra("description"));
         tvCat.setText(intent.getStringExtra("category"));
+        mealImage = intent.getStringExtra("image");
+        Picasso.get()
+                .load(mealImage)
+                .placeholder(R.drawable.ic_image_placeholder)
+                .fit()
+                .centerCrop()
+                .into(ivMealImage);
 
         boolean isGlutenFree = intent.getBooleanExtra("gluten", false);
         boolean isVeggie = intent.getBooleanExtra("veggie", false);

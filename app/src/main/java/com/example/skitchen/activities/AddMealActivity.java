@@ -45,17 +45,22 @@ public class AddMealActivity extends AppCompatActivity {
     private Meal newMeal;
 
     private Button btnUploadMeal;
+    private Button btnChooseImage;
     private ImageView ivMealPic;
     private EditText etMealName;
     private EditText etMealDescription;
     private RadioGroup rgMealCategory;
     private CheckBox cbGlutenFree;
     private CheckBox cbVegetarian;
+    private ProgressBar pbUploadProgress;
+    private Uri mImageUri;
 
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
 
-    private DatabaseReference databaseRef;
+    private DatabaseReference mDatabaseRef;
+    private StorageReference mStorageRef;
+    private UploadTask mUploadTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,55 +68,115 @@ public class AddMealActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_meal);
 
         btnUploadMeal = findViewById(R.id.btnUploadMeal);
+        btnChooseImage = findViewById(R.id.btnPickImage);
         ivMealPic = findViewById(R.id.ivMealPic);
         etMealName = findViewById(R.id.etMealName);
         etMealDescription = findViewById(R.id.etMealDescription);
         rgMealCategory = findViewById(R.id.rgMealCategory);
         cbGlutenFree = findViewById(R.id.cbGlutenFree);
         cbVegetarian = findViewById(R.id.cbVegetarian);
+        pbUploadProgress = findViewById(R.id.pbUploadMeal);
+
+        btnChooseImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openFileChooser();
+            }
+        });
 
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
 
-        databaseRef = FirebaseDatabase.getInstance().getReference("meals/");
-
-
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference("meals/");
+        mStorageRef = FirebaseStorage.getInstance().getReference("meals/");
 
         btnUploadMeal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new uploadMealTask().execute();
-
+                uploadFile();
             }
         });
     }
 
-    private class uploadMealTask extends AsyncTask<Void, Void, Void> {
+    private void openFileChooser() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(intent, PICK_IMAGE_REQUEST);
+    }
 
-        @Override
-        protected Void doInBackground(Void... voids) {
-            newMeal = createMeal();
-            String uploadID = databaseRef.push().getKey();
-            databaseRef.child(uploadID).setValue(newMeal);
-
-
-            return null;
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
+                && data != null && data.getData() != null) {
+            mImageUri = data.getData();
+            Picasso.get()
+                    .load(mImageUri)
+                    .placeholder(R.drawable.ic_image_placeholder)
+                    .fit()
+                    .centerCrop()
+                    .into(ivMealPic);
         }
+    }
 
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-            Toast.makeText(getBaseContext(), "Upload complete", Toast.LENGTH_SHORT).show();
-
-            Handler handler = new Handler();
-            handler.postDelayed(
-                    new Runnable() {
+    private String getFileExtension(Uri uri) {
+        ContentResolver cR = getContentResolver();
+        MimeTypeMap mime = MimeTypeMap.getSingleton();
+        return mime.getExtensionFromMimeType(cR.getType(uri));
+    }
+    private void uploadFile() {
+        if (mImageUri != null) {
+            final StorageReference fileReference = mStorageRef.child(System.currentTimeMillis()
+                    + "." + getFileExtension(mImageUri));
+            mUploadTask = (UploadTask) fileReference.putFile(mImageUri)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
-                        public void run() {
-                            startActivity(getParentActivityIntent());
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            Handler handler = new Handler();
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    pbUploadProgress.setProgress(0);
+                                }
+                            }, 500);
+                            fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    String imageUrl = uri.toString();
+                                    Meal uploadMeal = createMeal();
+                                    uploadMeal.setImage(imageUrl);
+                                    String uploadId = mDatabaseRef.push().getKey();
+                                    mDatabaseRef.child(uploadId).setValue(uploadMeal);
+                                }
+                            });
+                            Toast.makeText(AddMealActivity.this, "Upload successful", Toast.LENGTH_LONG).show();
+                            Handler toParentActivityHandler = new Handler();
+                            toParentActivityHandler.postDelayed(
+                                    new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            startActivity(getParentActivityIntent());
+                                        }
+                                    }
+                                    , 500);
                         }
-                    }
-            , 500);
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(AddMealActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                            double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
+                            pbUploadProgress.setProgress((int) progress);
+                        }
+                    });
+        } else {
+            Toast.makeText(this, "No file selected", Toast.LENGTH_SHORT).show();
         }
     }
 

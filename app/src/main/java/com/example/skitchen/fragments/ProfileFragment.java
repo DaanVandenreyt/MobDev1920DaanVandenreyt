@@ -118,7 +118,6 @@ public class ProfileFragment extends Fragment {
                    newMeals.add(meal);
                 }
             }
-
             return newMeals;
         }
     }

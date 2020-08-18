@@ -137,7 +137,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="Choose an image"
-                android:visibility="gone"
                 app:layout_constraintStart_toStartOf="@+id/etMealDescription"
                 app:layout_constraintTop_toBottomOf="@+id/cbVegetarian" />
 
@@ -148,7 +147,6 @@
                 android:layout_marginTop="8dp"
                 android:background="#DCDCDC"
                 android:contentDescription="Good image of the meal"
-                android:visibility="gone"
                 app:layout_constraintStart_toStartOf="@+id/btnPickImage"
                 app:layout_constraintTop_toBottomOf="@+id/btnPickImage"
                 tools:srcCompat="@tools:sample/avatars" />
@@ -161,7 +159,6 @@
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="24dp"
-                android:visibility="gone"
                 app:layout_constraintBottom_toTopOf="@+id/btnUploadMeal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
