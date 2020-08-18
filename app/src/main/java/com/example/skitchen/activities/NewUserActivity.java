@@ -4,7 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -12,12 +14,15 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.skitchen.R;
+import com.example.skitchen.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class NewUserActivity extends AppCompatActivity {
 
@@ -28,6 +33,7 @@ public class NewUserActivity extends AppCompatActivity {
     private EditText etPassword;
 
     private FirebaseAuth mAuth;
+    private DatabaseReference mDatabaseRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +41,7 @@ public class NewUserActivity extends AppCompatActivity {
         setContentView(R.layout.activity_new_user);
 
         mAuth = FirebaseAuth.getInstance();
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference("users/");
 
         etEmail = findViewById(R.id.etMail);
         etName = findViewById(R.id.etName);
@@ -49,7 +56,7 @@ public class NewUserActivity extends AppCompatActivity {
         });
     }
 
-    public void createUser(String email, String password) {
+    public void createUser(final String email, final String password) {
         if (!email.contains("@")) {
             Toast.makeText(this, "Email shoeld contain '@'", Toast.LENGTH_SHORT).show();
             return;
@@ -70,15 +77,12 @@ public class NewUserActivity extends AppCompatActivity {
 
                             UserProfileChangeRequest changeRequest = new UserProfileChangeRequest.Builder()
                                     .setDisplayName(etName.getText().toString()).build();
-                            mAuth.getCurrentUser().updateProfile(changeRequest)
-                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            if (task.isSuccessful()) {
-                                                Log.d(TAG, "User profile updated.");
-                                            }
-                                        }
-                                    });
+                            FirebaseUser currentUser = mAuth.getCurrentUser();
+                            currentUser.updateProfile(changeRequest);
+
+                            User user = new User(etName.getText().toString(), email);
+                            String uploadID = currentUser.getUid();
+                            mDatabaseRef.child(uploadID).setValue(user);
 
                             Intent intent = new Intent(NewUserActivity.this, PrimaryActivity.class);
                             startActivity(intent);
